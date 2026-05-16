@@ -1,6 +1,8 @@
 use std::fmt;
 use std::ops::{BitAnd, BitOr, BitXor, Not};
 
+use crate::engine::piece;
+
 #[derive(PartialEq, Eq, PartialOrd, Clone, Copy, Debug, Default, Hash)]
 pub struct BitBoard(pub u64);
 
@@ -25,6 +27,15 @@ impl BitBoard {
     }
 
     // Remove a piece clear(square)
+    pub fn clear_bit(&mut self, square: u8) {
+        self.0 &= !(1u64 << square);
+    }
+
     // Count pieces count(piece)
+    pub fn count(&self, piece: piece::Piece) -> u8 {
+        let mask = piece.mask();
+        ((self.0 & mask) != 0) as u8
+    }
+
     // Find all pieces - iterate over?
 }
